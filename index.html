@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,
+                        initial-scale=1.0">
+    <title>MyMemGenV2</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body onload="onInit()">
+    <header>
+        <div onclick="mobileNav()" class="nav-opacity"></div>
+        <nav class="nav-bar">
+            <div class="brand-container">
+                <div class="logo-container">
+                    <div class="logo"><img src="img/LOGO.png" width="50px" height="50px"> </div>
+                    <h3 class="nav-bar-h3">Meme Generator</h3>
+                </div>
+                <button class="menu" onclick="mobileNav();" aria-label="Main Menu">
+                    <svg width="40" height="40" viewBox="0 0 100 100">
+                        <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                        <path class="line line2" d="M 20,50 H 80" />
+                        <path class="line line3" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+                    </svg>
+                </button>
+            </div>
+            <ul class="header-links">
+                <li><a href="#" onclick="showGallery()">Gallery</a></li>
+                <li><a href="#" onclick="showMemes()">Memes</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="search-bar">
+        <div class="search-input-container">
+            <input id="search-input" placeholder="Enter keyword ...">
+            <svg id="search-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"/></svg>
+        </div>
+        <ul class="key-words-list"></ul>
+    </div>
+    <main class="main-layout">
+        <section class="gallery-container main-layout"></section>
+    </main>
+    <section class="canvas-btn-container">
+        <div class="canvas-container">
+            <canvas class="meme-canvas" width="500" height="500"></canvas>
+        </div>
+        <!-- <div class="button-grid-container"> -->
+        <section class="btn-container">
+            <div id="write-text" class="ui-container">
+                <div><input type="text" id="text-input" name="text-input" placeholder="Write something funny ..." onkeyup="drawLinesImgs()"></div>
+            </div>
+            <div id="utility" class="ui-container">
+                <button class="updown"><img src="https://img.icons8.com/ios/100/000000/circled-chevron-up.png" onclick="onGoUp()" /></button>
+                <button class="updown"><img src="https://img.icons8.com/ios/100/000000/circled-chevron-down.png" onclick="onGoDown()" /></button>
+                <button><img src="https://img.icons8.com/dotty/80/000000/sorting-arrows.png" onclick="onSwitchLines()"></button>
+                <button><img src="https://img.icons8.com/ios/100/000000/add--v1.png" onclick="onNextText()" /></button>
+                <button><img src="https://img.icons8.com/wired/64/000000/filled-trash.png" onclick="onRemoveLine()" /></button>
+            </div>
+            <div id="adjust-text" class="ui-container">
+                <div class="ui-col">
+                    <div class="ui-row">
+                        <button ><img src="https://img.icons8.com/dotty/80/000000/increase-font.png" onclick="onIncreaseFontSize()" /></button>
+                        <button><img src="https://img.icons8.com/dotty/80/000000/decrease-font.png" onclick="onDecreaseFontSize()" /></button>
+                        <button><img src="https://img.icons8.com/ios/100/000000/align-cell-content-left.png" onclick="onAlignLeft()" /></button>
+                        <button><img src="https://img.icons8.com/ios/100/000000/align-cell-content-center.png" onclick="onAlignCenter()" /></button>
+                        <button><img src="https://img.icons8.com/ios/100/000000/align-cell-content-right.png" onclick="onAlignRight()" /></button>
+                    </div>
+                    <div class="ui-row">
+                        <div id="select-font"><select onchange="onFontSelect(this.value)">
+                            <option value="Impact">Impact</option>
+                            <option value="Arial">Arial</option>
+                            <option value="Sans-Serif">Sans-Serif</option>
+                        </select></div>
+                        <button><img src="https://img.icons8.com/ios/100/000000/text-color.png" onclick="onSetTextStroke()" /></button>
+                        <div id="color-picker">
+                            <input type="color" name="selected-color" id="selected-color" onchange="onColorPick()">
+                            <!-- <img src="https://img.icons8.com/external-xnimrodx-lineal-color-xnimrodx/64/000000/external-color-graphic-design-xnimrodx-lineal-color-xnimrodx.png" /> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="share" class="ui-container">
+                <div><button><a href="#" onclick="onDownloadImg(this)" download="">Download</a></button></div>
+
+                <!-- <div><button onclick="onDownloadImg(this)">Download</button></div> -->
+                <div> <button onclick="onSaveMeme()">Save meme</button></div>
+            </div>
+        </section>
+    </section>
+    <footer>
+        KB © 2022
+    </footer>
+    <script src="js/service/upload-service.js"></script>
+    <script src="js/service/storage-service.js"></script>
+    <script src="js/service/gallery-service.js"></script>
+    <script src="js/service/meme-service.js"></script>
+    <script src="js/canvas-controller.js"></script>
+    <script src="js/gallery-controller.js"></script>
+</body>
+
+</html>
