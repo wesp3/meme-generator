@@ -19,6 +19,7 @@
                     <div class="logo"><img src="img/LOGO.png" width="50px" height="50px"> </div>
                     <h3 class="nav-bar-h3">Meme Generator</h3>
                 </div>
+
                 <button class="menu" onclick="mobileNav();" aria-label="Main Menu">
                     <svg width="40" height="40" viewBox="0 0 100 100">
                         <path class="line line1" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
@@ -27,9 +28,10 @@
                     </svg>
                 </button>
             </div>
+
             <ul class="header-links">
                 <li><a href="#" onclick="showGallery()">Gallery</a></li>
-                <li><a href="#" onclick="showMemes()">Memes</a></li>
+                <li><a href="#" onclick="showMemes()">Saved Memes</a></li>
                 <li><a href="#">About</a></li>
             </ul>
         </nav>
@@ -42,14 +44,16 @@
         </div>
         <ul class="key-words-list"></ul>
     </div>
+
     <main class="main-layout">
         <section class="gallery-container main-layout"></section>
     </main>
+
     <section class="canvas-btn-container">
         <div class="canvas-container">
             <canvas class="meme-canvas" width="500" height="500"></canvas>
         </div>
-        <!-- <div class="button-grid-container"> -->
+
         <section class="btn-container">
             <div id="write-text" class="ui-container">
                 <div><input type="text" id="text-input" name="text-input" placeholder="Write something funny ..." onkeyup="drawLinesImgs()"></div>
@@ -74,7 +78,7 @@
                         <div id="select-font"><select onchange="onFontSelect(this.value)">
                             <option value="Impact">Impact</option>
                             <option value="Arial">Arial</option>
-                            <option value="Sans-Serif">Sans-Serif</option>
+                            <option value="Trade Gothic">Trade Gothic</option>
                         </select></div>
                         <button><img src="https://img.icons8.com/ios/100/000000/text-color.png" onclick="onSetTextStroke()" /></button>
                         <div id="color-picker">
@@ -95,7 +99,6 @@
     <footer>
         KB © 2022
     </footer>
-    <script src="js/service/upload-service.js"></script>
     <script src="js/service/storage-service.js"></script>
     <script src="js/service/gallery-service.js"></script>
     <script src="js/service/meme-service.js"></script>
