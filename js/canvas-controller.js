@@ -6,8 +6,8 @@ var gDrawValues = {
   color: "black",
   isClicked: false,
 };
-var gIsDragging = false;
-var gGrabedLine = null;
+var gDragMove = false;
+var gLineGrabbed = null;
 
 function initCanvas() {
   gElCanvas = document.querySelector(".meme-canvas");
@@ -77,7 +77,7 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
-  handleMouseEventsOnCanvas(ev);
+  mouseEvOnCanvas(ev);
 }
 
 function onUp(ev) {
@@ -103,41 +103,41 @@ function getLinesPosition(meme) {
   return linesPos;
 }
 
-function handleMouseEventsOnCanvas(ev) {
+function mouseEvOnCanvas(ev) {
   ev.preventDefault();
 
   var offsetX = ev.offsetX;
   var offsetY = ev.offsetY;
 
   if (ev.type === "touchmove") {
-    offsetX = ev.targetTouches[0].clientX;
-    offsetY = ev.targetTouches[0].clientY;
+      offsetX = ev.targetTouches[0].clientX;
+      offsetY = ev.targetTouches[0].clientY;
   }
 
   var meme = getMeme();
   var linesPos = getLinesPosition(meme);
 
   for (var i = 0; i < linesPos.length; i++) {
-    if (offsetY < linesPos[i].y + 50 && offsetY > linesPos[i].y - 80) {
-      gElCanvas.style.cursor = "pointer";
-      gIsDragging = true;
-      gGrabedLine = linesPos[i].line;
-      gGrabedLine.isMarked = true;
-      break;
-    } else {
-      gIsDragging = false;
-      gElCanvas.style.cursor = "default";
-      if (gGrabedLine) gGrabedLine.isMarked = false;
-    }
+      if (offsetY < linesPos[i].y + 50 && offsetY > linesPos[i].y - 80) {
+          gElCanvas.style.cursor = "pointer";
+          gDragMove = true;
+          gLineGrabbed = linesPos[i].line;
+          gLineGrabbed.isMarked = true;
+          break;
+      } else {
+          gDragMove = false;
+          gElCanvas.style.cursor = "default";
+          if (gLineGrabbed) gLineGrabbed.isMarked = false;
+      }
   }
 
-  if (gDrawValues.isClicked && gIsDragging) {
-    gElCanvas.style.cursor = "grab";
-    if (gGrabedLine) {
-      gGrabedLine.align.x = offsetX - 50;
-      gGrabedLine.align.y = offsetY + 10;
-    }
-    drawLinesImgs();
+  if (gDrawValues.isClicked && gDragMove) {
+      gElCanvas.style.cursor = "grab";
+      if (gLineGrabbed) {
+          gLineGrabbed.align.x = offsetX - 50;
+          gLineGrabbed.align.y = offsetY + 10;
+      }
+      drawLinesImgs();
   }
 }
 
@@ -217,5 +217,4 @@ function onDownloadImg(elLink) {
 
 function onSaveMeme() {
   saveMeme();
-  alert("Was saved to Memes");
 }
