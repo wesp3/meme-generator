@@ -53,6 +53,7 @@ function resetSort() {
   gSortedImgs = gImgs.slice();
 }
 
+//util function
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
